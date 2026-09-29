@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.demo</groupId>
+    <artifactId>demo-auth-entraid</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+    <name>Entra ID sign-in demo (Java Servlet + MSAL4J)</name>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <msal4j.version>1.26.0</msal4j.version>
+        <jetty.version>12.0.16</jetty.version>
+    </properties>
+
+    <dependencies>
+        <!-- Microsoft Authentication Library for Java: builds the Entra ID login URL
+             and exchanges the authorization code for tokens. -->
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>msal4j</artifactId>
+            <version>${msal4j.version}</version>
+        </dependency>
+
+        <!-- Servlet API (Jakarta, Servlet 6). Provided by the container (Tomcat 10.1+ / Jetty 12).
+             For Tomcat 9 (javax.*) see README "Using javax.servlet". -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Simple logger so MSAL4J log output appears in the console. -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>demo-auth-entraid</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+            <!-- `mvn jetty:run` starts the demo on http://localhost:8080 without installing a server. -->
+            <plugin>
+                <groupId>org.eclipse.jetty.ee10</groupId>
+                <artifactId>jetty-ee10-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

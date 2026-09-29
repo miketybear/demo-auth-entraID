@@ -1,0 +1,5 @@
+target/
+auth.properties
+*.iml
+.idea/
+.vscode/
